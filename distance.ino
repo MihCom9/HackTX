@@ -12,8 +12,13 @@ void setup() {
 
 void loop() {
 
-  speed = (PS4.LStickY()) * 0.787401575;
-  distance = (speed*3600) * 0.002;
+  speed = (PS4.LStickY()) * 0.787401575; //промени PS4.LStickY с дйоистика от сайта
+  distance = (speed*3600) * 0.02;
   distanceSum = distanceSum + distance;
+  distanceReset();
+  delay(20)
   //код за пращане на изминатата дистанция на бота
+}
+void distanceReset() {
+  //if statement за копче, което да прави distance = 0
 }
