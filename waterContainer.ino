@@ -1,6 +1,6 @@
 #define sensorPower 7
 #define sensorPin A0
-int level = 0l;
+int level = 0;
 int quant = 0;
 bool check = false;
 //промени стойностите на променливите ако трябва
