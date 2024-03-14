@@ -1,0 +1,135 @@
+<!DOCTYPE HTML><html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+
+  <h2>ESP32 DHT Server</h2>
+
+  <div id="slider" onclick="showCordinates(event)" class="slider">
+    <div class="thumb" id="thumb"></div>
+  </div>
+  <h1 id="changeOnclick">Y=0</h1>
+  <h1 id="changeOnRight">X=0</h1>
+
+  <p>
+    <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
+    <span class="dht-labels">Temperature</span> 
+    <span id="temperature">36</span>
+    <sup class="units">&deg;C</sup>
+  </p>
+  <p>
+    <i class="fas fa-tint" style="color:#00add6;"></i> 
+    <span class="dht-labels">Humidity</span>
+    <span id="humidity">61%</span>
+    <sup class="units">%</sup>
+  </p>
+
+</body>
+
+
+<script>
+    let center=125
+    let thumb = slider.querySelector('.thumb');
+    let ok=0;
+    thumb.style.left=center+"px";
+    thumb.style.top=center+"px";
+    thumb.onmousedown = function(event) {
+        ok=1;
+      event.preventDefault(); // prevent selection start (browser action)
+      let shiftY = event.clientY - thumb.getBoundingClientRect().top;
+      let shiftX= event.clientX - thumb.getBoundingClientRect().left;
+      // shiftY not needed, the thumb moves only horizontally
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseleft', onMouseLeft);
+    
+      function onMouseMove(event) {
+        let newLeft = event.clientY - shiftY - slider.getBoundingClientRect().top;
+        let newTop=event.clientX-shiftX-slider.getBoundingClientRect().left;
+    
+        // the pointer is out of slider => lock the thumb within the bounaries
+        if (newLeft < 0) {
+          newLeft = 0;
+        }
+        if (newTop < 0) {
+          newTop = 0;
+        }
+        let rightEdge = slider.offsetHeight - thumb.offsetHeight;
+        let topEdge = slider.offsetWidth - thumb.offsetWidth;
+        if (newLeft > rightEdge) {
+          newLeft = rightEdge;
+        }
+        if (newTop > topEdge) {
+          newTop=topEdge;
+        }
+    
+        thumb.style.top =  newLeft + 'px';
+        thumb.style.left = newTop + 'px';
+        if(newLeft>=center){
+            newLeft-=center;
+        }else{
+            newLeft-=center;
+        }
+        newLeft=-newLeft
+        if(newTop>=center){
+            newTop-=center;
+        }else{
+            newTop-=center;
+        }
+        var h1=document.getElementById("changeOnclick");
+        h1.innerHTML="Y="+newLeft;
+        var h11=document.getElementById("changeOnRight");
+        h11.innerHTML="X="+newTop;
+      }
+      function onMouseUp() {
+        document.removeEventListener('mouseup', onMouseUp);
+        document.removeEventListener('mousemove', onMouseMove);   
+        thumb.style.left=center+"px";
+        thumb.style.top=center+"px";
+        var h1=document.getElementById("changeOnclick");
+        h1.innerHTML="Y="+0;
+        var h11=document.getElementById("changeOnRight");
+        h11.innerHTML="X="+0;
+      }
+      function onMouseLeft() {
+        document.removeEventListener('mouseup', onMouseLeft);
+        document.removeEventListener('mousemove', onMouseMove);
+        thumb.style.left=center+"px";
+        thumb.style.top=center+"px";
+        var h1=document.getElementById("changeOnclick");
+        h1.innerHTML=0;
+        var h11=document.getElementById("changeOnRight");
+        h11.innerHTML=0;
+      }
+    
+    };
+    
+    
+    thumb.ondragstart = function() {
+      return false;
+    };
+        // function showCordinates(event){
+        //     if(ok==0){
+        //     var mouseCor=event.clientY;
+        //     if(mouseCor>100){
+        //         mouseCor=100;
+        //     }
+        //     var button= document.getElementById("thumb");
+        //         if(mouseCor>20){
+        //         button.style.top=mouseCor-20+"px";
+        //         }else{
+        //             button.style.top="0";
+        //         }
+        //     var h1=document.getElementById("changeOnclick");
+        //     h1.innerHTML=mouseCor+"";
+        //     }
+        //     ok=0
+        // }
+</script>
+
+</html>
