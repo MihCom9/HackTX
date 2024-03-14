@@ -30,28 +30,11 @@ void loop()
   steer = (PS4.LStickX());
 
   motorspeedb = 0;
-  motorspeedb =  (PS4.L2Value());
+  motorspeedb =
+    (PS4.L2Value());
   
   motorspeedf = 0;
   motorspeedf = (PS4.R2Value());
-  
-  if((PS4.L2Value())>0 && (PS4.R2Value())==0 && steer<10 && steer>-10)
-  {
-    driver.motorAReverse(motorspeedb);
-    driver.motorBReverse(motorspeedb);
-  }
-
-  if((PS4.R2Value())>0 && (PS4.L2Value())==0 && steer<10 && steer>-10)
-  {
-    driver.motorAForward(motorspeedf);
-    driver.motorBForward(motorspeedf);
-  }
-  
-  if((PS4.R2Value())>0 && (PS4.L2Value())>0 && steer<10 && steer>-10)
-  {
-  driver.motorAForward(motorspeedf);
-  driver.motorBForward(motorspeedf);
-  }
 
   if((PS4.R2Value())==0 && (PS4.L2Value())==0 && steer<10 && steer>-10)
   {
@@ -60,39 +43,58 @@ void loop()
     driver.motorBForward(0);
     driver.motorBReverse(0);
   }
+  
+  else if((PS4.L2Value())>0 && (PS4.R2Value())==0 && steer<10 && steer>-10)
+  {
+    driver.motorAReverse(motorspeedb);
+    driver.motorBReverse(motorspeedb);
+  }
 
-  if((PS4.L2Value())>0 && (PS4.R2Value())==0 && steer>10)
+  else if((PS4.R2Value())>0 && (PS4.L2Value())==0 && steer<10 && steer>-10)
+  {
+    driver.motorAForward(motorspeedf);
+    driver.motorBForward(motorspeedf);
+  }
+  
+  else if((PS4.R2Value())>0 && (PS4.L2Value())>0 && steer<10 && steer>-10)
+  {
+    driver.motorAForward(motorspeedf);
+    driver.motorBForward(motorspeedf);
+  }
+
+
+  else if((PS4.L2Value())>0 && (PS4.R2Value())==0 && steer>10)
   {
     driver.motorAReverse(motorspeedb);
     driver.motorBReverse(motorspeedb-steer*2);
   }
 
-  if((PS4.L2Value())>0 && (PS4.R2Value())==0 && steer<10)
+  else if((PS4.L2Value())>0 && (PS4.R2Value())==0 && steer<10)
   {
     driver.motorAReverse(motorspeedb+steer*2);
     driver.motorBReverse(motorspeedb);
   }
 
-  if((PS4.R2Value())>0 && (PS4.L2Value())==0 && steer>10)
+  else if((PS4.R2Value())>0 && (PS4.L2Value())==0 && steer>10)
   {
     driver.motorAForward(motorspeedf-steer*2);
     driver.motorBForward(motorspeedf);
   }
 
-  if((PS4.R2Value())>0 && (PS4.L2Value())==0 && steer<-10)
+  else if((PS4.R2Value())>0 && (PS4.L2Value())==0 && steer<-10)
   {
     driver.motorAForward(motorspeedf);
     driver.motorBForward(motorspeedf+steer*2);
   }
   
-  if((PS4.R2Value())==0 && (PS4.L2Value())==0 && steer>10)
+  else if((PS4.R2Value())==0 && (PS4.L2Value())==0 && steer>10)
   {
     driver.motorAReverse(motorspeedf+steer*2);
     driver.motorBForward(motorspeedf+steer*2);
   }
 
   
-  if((PS4.R2Value())==0 && (PS4.L2Value())==0 && steer<-10)
+  else if((PS4.R2Value())==0 && (PS4.L2Value())==0 && steer<-10)
   {
     driver.motorAForward(motorspeedf-steer*2);
     driver.motorBReverse(motorspeedf-steer*2);
