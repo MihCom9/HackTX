@@ -18,6 +18,7 @@ void loop() {
 
   level = readSensor();
   quant = level * 15 * 15;
+  waterCap();
   // код за изпращане на количеството вода към сайта
   delay(1000);
 }
