@@ -7,117 +7,125 @@
 </head>
 <body>
 
-  <h2>ESP32 DHT Server</h2>
-  <!-- makes a controller joystick  -->
+  <h2>Joistic who control the robot</h2>
+
   <div id="slider" onclick="showCordinates(event)" class="slider">
     <div class="thumb" id="thumb"></div>
   </div>
-  <!-- Chack for cordinates -->
   <h1 id="changeOnclick">Y=0</h1>
   <h1 id="changeOnRight">X=0</h1>
-  <!-- Show temperature -->
+
   <p>
     <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
     <span class="dht-labels">Temperature</span> 
     <span id="temperature">36</span>
     <sup class="units">&deg;C</sup>
   </p>
-  <!-- Show humidity -->
   <p>
     <i class="fas fa-tint" style="color:#00add6;"></i> 
     <span class="dht-labels">Humidity</span>
     <span id="humidity">61%</span>
     <sup class="units">%</sup>
   </p>
-
+  <p>
+ 
+    <span class="dht-labels">There are  <span id="quant"> 61</span>ml in the container</span>
+  
+    
+  </p>
+  <div class="slidecontainer">
+    <h3>You can regulate speed here</h3>
+    <input type="range" min="0" max="100" value="50" class="slider2" id="myRange">
+    <p>Speed: <span id="demo"></span></p>
+    <p id="test"></p>
+  </div>
+ 
 </body>
 
 
 <script>
-    // center for moving stick
+
+    ///////////slider2
+    var slider2 = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider2.value;
+
+slider2.oninput = function() {
+  output.innerHTML = this.value;
+  
+}
+
+/////////
+
     let center=125
-    // gets the class of moving stick
     let thumb = slider.querySelector('.thumb');
     let ok=0;
-    //centers the moving stick
     thumb.style.left=center+"px";
     thumb.style.top=center+"px";
-    //If moving stick is moved
     thumb.onmousedown = function(event) {
         ok=1;
-      // prevent selection start
-      event.preventDefault();
-      // gets the height and width of the stick
+      event.preventDefault(); // prevent selection start (browser action)
       let shiftY = event.clientY - thumb.getBoundingClientRect().top;
       let shiftX= event.clientX - thumb.getBoundingClientRect().left;
-      // listens for a move
+      // shiftY not needed, the thumb moves only horizontally
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseleft', onMouseLeft);
-      //if the mpuse mpves
+    
       function onMouseMove(event) {
-        //gets the left and top position of an element
-        let newTop = event.clientY - shiftY - slider.getBoundingClientRect().top;
-        let newLeft=event.clientX-shiftX-slider.getBoundingClientRect().left;
+        let newLeft = event.clientY - shiftY - slider.getBoundingClientRect().top;
+        let newTop=event.clientX-shiftX-slider.getBoundingClientRect().left;
     
         // the pointer is out of slider => lock the thumb within the bounaries
-        if (newTop < 0) {
-          newTop = 0;
-        }
         if (newLeft < 0) {
           newLeft = 0;
         }
-        //gets the right and top corners , so it doesn't go off bounds
+        if (newTop < 0) {
+          newTop = 0;
+        }
         let rightEdge = slider.offsetHeight - thumb.offsetHeight;
         let topEdge = slider.offsetWidth - thumb.offsetWidth;
-        if (newTop > rightEdge) {
-          newTop = rightEdge;
+        if (newLeft > rightEdge) {
+          newLeft = rightEdge;
         }
-        if (newLeft > topEdge) {
-          newLeft=topEdge;
+        if (newTop > topEdge) {
+          newTop=topEdge;
         }
-        //sets the new position
-        thumb.style.top =  newTop + 'px';
-        thumb.style.left = newLeft + 'px';
-        if(newTop>=center){
-            newTop-=center;
-        }else{
-            newTop-=center;
-        }
-        newTop=-newTop
+    
+        thumb.style.top =  newLeft + 'px';
+        thumb.style.left = newTop + 'px';
         if(newLeft>=center){
             newLeft-=center;
         }else{
             newLeft-=center;
         }
-        //prints the ordinates on the website
+        newLeft=-newLeft
+        if(newTop>=center){
+            newTop-=center;
+        }else{
+            newTop-=center;
+        }
         var h1=document.getElementById("changeOnclick");
-        h1.innerHTML="Y="+newTop;
+        h1.innerHTML="Y="+newLeft;
         var h11=document.getElementById("changeOnRight");
-        h11.innerHTML="X="+newLeft;
+        h11.innerHTML="X="+newTop;
       }
       function onMouseUp() {
-        //removes the listener if stopped moving
         document.removeEventListener('mouseup', onMouseUp);
         document.removeEventListener('mousemove', onMouseMove);   
-        //sets the stick to middle again
         thumb.style.left=center+"px";
         thumb.style.top=center+"px";
-        //prints the mid cordinates(0,0)
         var h1=document.getElementById("changeOnclick");
         h1.innerHTML="Y="+0;
         var h11=document.getElementById("changeOnRight");
         h11.innerHTML="X="+0;
       }
       function onMouseLeft() {
-        //if moved the listener stops listening
         document.removeEventListener('mouseup', onMouseLeft);
         document.removeEventListener('mousemove', onMouseMove);
-        // sets the stick to center
         thumb.style.left=center+"px";
         thumb.style.top=center+"px";
-        // prints the cordinates again
         var h1=document.getElementById("changeOnclick");
         h1.innerHTML=0;
         var h11=document.getElementById("changeOnRight");
@@ -126,7 +134,7 @@
     
     };
     
-    // makes the stick drop
+    
     thumb.ondragstart = function() {
       return false;
     };
