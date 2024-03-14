@@ -20,5 +20,5 @@ void loop() {
   //код за пращане на изминатата дистанция на бота
 }
 void distanceReset() {
-  //if statement за копче, което да прави distance = 0
+  //if statement за копче в сайта, което да прави distance = 0
 }
