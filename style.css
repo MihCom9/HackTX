@@ -1,0 +1,20 @@
+.slider {
+    border-radius: 200px;
+    background: #E0E0E0;
+    background: linear-gradient(left top, #E0E0E0, #EEEEEE);
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .thumb {
+    width: 30px;
+    height: 30px;
+    border-radius: 200px;
+    position: relative;
+    background: blue;
+    cursor: grab;
+  }
