@@ -27,6 +27,7 @@ int player = 1;
 int battery = 0;
 int speedWebsiteX;
 int speedWebsiteY;
+int ok=0;
 const char* ssid     = "ESP32-Network";
 const char* password = "Esp32-Password";
 
@@ -48,7 +49,7 @@ unsigned long currentTime = millis();
 // Previous time
 unsigned long previousTime = 0;
 // Define timeout time in milliseconds
-const long timeoutTime = 2000;
+const long timeoutTime = 3000;
 void setup() {
   Serial.begin(115200);
   PS4.begin();
@@ -73,8 +74,10 @@ unsigned int p=0;
 int ok=0;
 void loop() {
   websiteGetter();
-  Serial.println("X"+speedWebsiteX);
-  Serial.println("Y"+speedWebsiteY);
+  Serial.print("X:");
+  Serial.println(speedWebsiteX);
+  Serial.print("Y:");
+  Serial.println(speedWebsiteY);
   wheels();
   ultra();
   plantCheck();
@@ -86,11 +89,10 @@ void loop() {
 }
 
 void DHT() {
-  delay(500);
   float h = dht.readHumidity();
   float t = dht.readTemperature();
     if (isnan(h) || isnan(t)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
+   // Serial.println(F("Failed to read from DHT sensor!"));
     return;
   }
   Serial.print("Humidity: "); 
@@ -330,8 +332,8 @@ void websiteGetter() {
               Serial.println();
               int numberFinalX=atoi(numberX);
               speedWebsiteX=numberFinalX;
-                Serial.print("X=" );
-              Serial.print(numberFinalX );
+             // Serial.print("X=" );
+             // Serial.println(numberFinalX );
             }
 ///  Y**********
             if(header.indexOf("POST /y")>=0){
@@ -350,8 +352,8 @@ void websiteGetter() {
               Serial.println();
               int numberFinalY=atoi(numberY);
               speedWebsiteY=numberFinalY;
-               Serial.print("Y=" );
-              Serial.print(numberFinalY );
+               //Serial.print("Y=" );
+             // Serial.println(numberFinalY );
              
             }
 //*****
@@ -423,7 +425,7 @@ void websiteGetter() {
 
         client.println("let center = 125;");
         client.println("let thumb = document.querySelector('.thumb');");
-        client.println("let ok = 0;let jjjj = 0;");
+        client.println("let ok = 0;let jjjj = 0;let kkkk=0,let mmmm=0");
         client.println("thumb.style.left = center + 'px';");
         client.println("thumb.style.top = center + 'px';");
         client.println("thumb.addEventListener('touchstart', handleStart);");
@@ -466,8 +468,8 @@ void websiteGetter() {
         client.println("        h11.innerHTML = 'X=' + newTop;");
          client.println("console.log(newTop); console.log(newLeft)");
          client.println("jjjj+=1;");
-           client.println("   if(jjjj==30){fetch('/x', {method: 'POST',body: newLeft}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});");
-           client.println("    fetch('/y', {method: 'POST',body: newTop}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});jjjj=0;}");
+          client.println("   if(jjjj==20){fetch('/x', {method: 'POST',body: newLeft}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});");
+          client.println("    fetch('/y', {method: 'POST',body: newTop}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});jjjj=0;}");
 
         // client.println("}");
           client.println("}");
@@ -484,11 +486,10 @@ void websiteGetter() {
         client.println("        h1.innerHTML = 'Y=' + 0;");
         client.println("        var h11 = document.getElementById('changeOnRight');");
         client.println("        h11.innerHTML = 'X=' + 0;");
-         client.println("function sendData(){");
-           client.println("  addEventListener('mousemove', function() {const url = '/x';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
-          client.println("   addEventListener('mousemove', function() {const url = '/y';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
+        client.println("kkkk+=1;");
+           client.println("  if(kkkk==20){fetch('/x', {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});");
+          client.println("   fetch('/y', {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});kkkk=0;}");
 
-         client.println("}");
         client.println("   }");
         client.println("    function handleCancel() {");
         client.println("        document.removeEventListener('touchcancel', handleCancel);");
@@ -500,9 +501,10 @@ void websiteGetter() {
         client.println("        h1.innerHTML = 0;");
         client.println("        var h11 = document.getElementById('changeOnRight');");
         client.println("        h11.innerHTML = 0;");
-        client.println("function sendData(){");
-         client.println("  addEventListener('mousemove', function() {const url = '/x';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
-          client.println("   addEventListener('mousemove', function() {const url = '/y';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
+        client.println("mmmm+=1;");
+           client.println("  if(mmmm==20){fetch('/x', {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});");
+          client.println("   fetch('/y', {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});mmmm=0;}");
+
 
         client.println("}");
         client.println("    }");
