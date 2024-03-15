@@ -375,14 +375,7 @@ void websiteGetter() {
         client.println("}");
 
            client.println("</script>");
-
            //**************************************************//
-
-            client.println("<script>  let image = document.createElement('h1');image.id='70';document.body.appendChild(image);  setInterval(()=>{    fetch('/pp', {        method: 'GET',     })   .then(response => {  if (!response.ok) {    throw new Error('Network response was not ok');  }   return response.blob();  }).then(blob => { return blob.text(); }).then((texter)=>{     document.getElementById('70').remove();    let image = document.createElement('h1');  image.textContent = 'Temperature: '+texter;  image.id='70';  document.body.appendChild(image); })},500)</script>");
-            client.println("<script>  let image = document.createElement('h1');image.id='69';document.body.appendChild(image);  setInterval(()=>{    fetch('/jj', {        method: 'GET',     })   .then(response => {  if (!response.ok) {    throw new Error('Network response was not ok');  }   return response.blob();  }).then(blob => { return blob.text(); }).then((texter)=>{     document.getElementById('69').remove();    let image = document.createElement('h1');  image.textContent = 'Humidity: '+texter;  image.id='69';  document.body.appendChild(image); })},500)</script>"); 
-
-
-
             client.println("</body></html>");
 
             // The HTTP response ends with another blank line
