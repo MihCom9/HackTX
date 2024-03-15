@@ -1,3 +1,9 @@
+/*the right pin is for data - g26
+  the middle pin is 5v power
+  the right pin is GND
+*/
+
+
 #include "DHT.h"
 #define DHTPIN 26  
 #define DHTTYPE DHT11
