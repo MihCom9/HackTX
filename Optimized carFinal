@@ -196,7 +196,7 @@ int readSensor() {
 }
 void waterCap() {
   if (quant < 100 && check == false) {
-  Serial.println("Остава малко вода (под 100см)");
+  Serial.println("Остава малко вода (под 100 литра)");
   check = true;
   }
   if (quant > 150) {
@@ -209,10 +209,6 @@ void websiteGetter() {
   float h = dht.readHumidity();
   float t = dht.readTemperature();  /*Read default temperature in Celsius*/
   float f = dht.readTemperature(true);  /*Read temperature in Fahrenheit*/
-  if (isnan(h) || isnan(t) || isnan(f)) {   /*if condition to check all reading taken or not*/
-  //Serial.println(F("Failed to read from DHT sensor!"));
-  //return;
-  }
   WiFiClient client = server.available();   // Listen for incoming clients
   k=h;
   p=t;
@@ -246,13 +242,11 @@ void websiteGetter() {
               client.println(p,10);
               client.println("\nHumidity");
               client.println(k,10);
-              //Serial.println("89");
               ok=1;
               break;
             }
             if(header.indexOf("GET /jj")>=0){
               client.println(k,10);
-              //Serial.println("90");
               client.println("br");
               break;
             }
@@ -261,34 +255,29 @@ void websiteGetter() {
               char numberX[20];
               int i=0;
               while(m>0){
-                //Serial.print((char)m);
                 numberX[i]=(char)m;
                 i++;  
                 m=client.read();
               }
               numberX[i]=0;
               i++;
-              //Serial.print(numberX);
               Serial.println();
               int numberFinalX=atoi(numberX);
               speedWebsiteX=numberFinalX;
                 Serial.print("X=" );
               Serial.print(numberFinalX );
             }
-///  Y**********
             if(header.indexOf("POST /y")>=0){
               int n =client.read();
               char numberY[20];
               int index=0;
               while(n>0){
-                //Serial.print((char)m);
                 numberY[index]=(char)n;
                 index++;  
                 n=client.read();
               }
               numberY[index]=0;
               index++;
-              //Serial.print(numberY);
               Serial.println();
               int numberFinalY=atoi(numberY);
               speedWebsiteY=numberFinalY;
@@ -311,7 +300,7 @@ void websiteGetter() {
 
         client.println("<h1 id=\"changeOnclick\">Y=0</h1>");
         client.println("<h1 id=\"changeOnRight\">X=0</h1>");
-        
+
         client.println("<p>");
         client.println("<span class=\"dht-labels\">There are <span class=\"quant\">61</span> ml in the container</span>");
         client.println("</p>");
@@ -408,11 +397,11 @@ void websiteGetter() {
         client.println("        h1.innerHTML = 'Y=' + 0;");
         client.println("        var h11 = document.getElementById('changeOnRight');");
         client.println("        h11.innerHTML = 'X=' + 0;");
-         client.println("function sendData(){");
-           client.println("  addEventListener('mousemove', function() {const url = '/x';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
-          client.println("   addEventListener('mousemove', function() {const url = '/y';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
+        //  client.println("function sendData(){");
+        //    client.println("  addEventListener('mousemove', function() {const url = '/x';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
+        //   client.println("   addEventListener('mousemove', function() {const url = '/y';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
 
-         client.println("}");
+        //  client.println("}");
         client.println("   }");
         client.println("    function handleCancel() {");
         client.println("        document.removeEventListener('touchcancel', handleCancel);");
@@ -424,11 +413,11 @@ void websiteGetter() {
         client.println("        h1.innerHTML = 0;");
         client.println("        var h11 = document.getElementById('changeOnRight');");
         client.println("        h11.innerHTML = 0;");
-        client.println("function sendData(){");
-         client.println("  addEventListener('mousemove', function() {const url = '/x';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
-          client.println("   addEventListener('mousemove', function() {const url = '/y';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
+        // client.println("function sendData(){");
+        //  client.println("  addEventListener('mousemove', function() {const url = '/x';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
+        //   client.println("   addEventListener('mousemove', function() {const url = '/y';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
 
-        client.println("}");
+        // client.println("}");
         client.println("    }");
         client.println("}");
 
