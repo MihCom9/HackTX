@@ -1,24 +1,21 @@
-#include <PS4Controller.h>
-#include <DRV8833.h>
-
 float speed, distance;
 float distanceSum = 0;
+int sliderValue;
 
 void setup() {
-  PS4.begin();
-  driver.attachMotorA(inputA1, inputA2);
-  driver.attachMotorB(inputB1, inputB2);
 }
 
 void loop() {
-
-  speed = (PS4.LStickY()) * 0.787401575; //промени PS4.LStickY с дйоистика от сайта
+  //кода за взимане на стойността на слайдера от сайта
+  speed = sliderValue*0.03;
   distance = (speed*3600) * 0.02;
   distanceSum = distanceSum + distance;
   distanceReset();
-  delay(20)
+  delay(20);
   //код за пращане на изминатата дистанция на бота
 }
 void distanceReset() {
-  //if statement за копче в сайта, което да прави distance = 0
+  if(/*бутона в сайта е натиснат*/){
+    distanceSum = 0;
+  }
 }
