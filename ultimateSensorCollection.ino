@@ -7,7 +7,7 @@
 #define inputB1 26
 #define inputB2 27
 #define trigPin 16
-#define echoPin 17
+#define echoPin 4
 #define pumpPin 35
 #define depthPower 15
 #define depthPin 25
