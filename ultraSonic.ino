@@ -1,6 +1,5 @@
-const int trigPin = 9;
-const int echoPin = 10;
-const int pumpPin = 13;
+const int trigPin = 17;
+const int echoPin = 16;
 float duration, distance;
 
 //промени стойностите на пиновете
@@ -8,8 +7,7 @@ float duration, distance;
 void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  pinMode(pumpPin, OUTPUT);
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void loop() {
