@@ -100,15 +100,12 @@ void DHT() {
   //ред за изпращане на стойностите към сайта
 }
 void wheels() {
-
+  if(PS4.isConnected()){
   steer = 0;
   steer = (PS4.LStickX());
 
   speed = 0;
   speed = (PS4.LStickY());
-
-  int speedW=map(speedWebsiteY,-125,125,-127,128);
-  int steerW=map(speedWebsiteX,-125,125,-127,128);
   //STOP
   if ((speed < 30 && speed > -30) && (steer < 30 && steer > -30)) {
     driver.motorAForward(0);
@@ -166,6 +163,65 @@ void wheels() {
   }
 
   delay(20);
+  }else{
+      int speed=map(speedWebsiteY,-125,125,-127,128);
+      int steer=map(speedWebsiteX,-125,125,-127,128);
+      //move with website variables
+    if ((speed < 30 && speed > -30) && (steer < 30 && steer > -30)) {
+    driver.motorAForward(0);
+    driver.motorAReverse(0);
+    driver.motorBForward(0);
+    driver.motorBReverse(0);
+  }
+
+  //GO BACK
+  if (speed > 30 && steer < 30 && steer > -30) {
+    driver.motorAReverse(speed * 2);
+    driver.motorBReverse(speed * 2);
+  }
+
+  //GO FORWARD
+  if (speed < -30 && steer < 30 && steer > -30) {
+    driver.motorAForward(-speed * 2);
+    driver.motorBForward(-speed * 2);
+  }
+
+  //GO LEFT BACK
+  if (speed < 30 && steer > 30) {
+    driver.motorAReverse(speed * 2);
+    driver.motorBReverse(speed * 2 - steer * 2);
+  }
+
+  //GO RIGHT BACK
+  if (speed < 30 && steer < -30) {
+    driver.motorAReverse(speed * 2 + steer * 2);
+    driver.motorBReverse(speed * 2);
+  }
+
+  //GO RIGHT FORWARD
+  if (speed < -30 && steer > 30) {
+    driver.motorAForward((-speed * 2) - steer * 2);
+    driver.motorBForward(-speed * 2);
+  }
+
+  //GO LEFT FORWARD
+  if (speed < -30 && steer < -30) {
+    driver.motorAForward(-speed * 2);
+    driver.motorBForward(-speed + steer * 2);
+  }
+
+  //SPIN RIGHT
+  if (speed > -30 && speed < 30 && steer > 30) {
+    driver.motorAReverse(0 + steer * 2);
+    driver.motorBForward(0 + steer * 2);
+  }
+
+  //SPIN LEFT
+  if (speed > -30 && speed < 30 && steer < -30) {
+    driver.motorAForward(0 - steer * 2);
+    driver.motorBReverse(0 - steer * 2);
+  }
+  }
 }
 void ultra() {
   digitalWrite(trigPin, LOW);
