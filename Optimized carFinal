@@ -80,7 +80,7 @@ void loop() {
   wheels();
   PumpOn();
   level = readSensor();
-  quant = (level/100) * 225;
+  quant = (level/10) * 225;
   Serial.print("Ml: ");
   Serial.println(quant);
   waterCap();
@@ -170,17 +170,6 @@ void wheels() {
 
   delay(20);
 }
-// void ultra() {
-//   digitalWrite(trigPin, LOW);
-//   delayMicroseconds(2);
-//   digitalWrite(trigPin, HIGH);
-//   delayMicroseconds(10);
-//   digitalWrite(trigPin, LOW);
-//   Serial.print("Distance: ");
-//   Serial.println(distance);
-//   duration = pulseIn(echoPin, HIGH);
-//   distance = (duration * .0343) / 2;
-// }
 void pumpOn() {
     digitalWrite(pumpPin, HIGH);
     delay(100);
@@ -287,12 +276,10 @@ void websiteGetter() {
             }
 //*****
             
-            client.println("<!DOCTYPE HTML> <html>\n  <html>" );
-
-                  client.println("<button id=\"postButton\">Send POST Request</button>");
-            client.println("<script>    document.getElementById('postButton').addEventListener('click', function() {const url = '/x';fetch(url, {method: 'POST',body: '234'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});</script>");
-            client.println("<script>  let image = document.createElement('h1');image.id='70';document.body.appendChild(image);  setInterval(()=>{    fetch('/pp', {        method: 'GET',     })   .then(response => {  if (!response.ok) {    throw new Error('Network response was not ok');  }   return response.blob();  }).then(blob => { return blob.text(); }).then((texter)=>{     document.getElementById('70').remove();    let image = document.createElement('h1');  image.textContent = 'Temperaturere: '+texter+'\n';  image.id='70';  document.body.appendChild(image); })},500)</script>");
-            client.println("<script>  let image2 = document.createElement('h2');image2.id='69';document.body.appendChild(image);  setInterval(()=>{    fetch('/jj', {        method: 'GET',     })   .then(response => {  if (!response.ok) {    throw new Error('Network response was not ok');  }   return response.blob();  }).then(blob => { return blob.text(); }).then((texter)=>{     document.getElementById('69').remove();    let image2 = document.createElement('h1');  image2.textContent = 'Humiditytiti: '+texter;  image2.id='69';  document.body.appendChild(image2); })},500)</script>"); 
+        client.println("<!DOCTYPE HTML> <html>\n  <html>" );
+        client.println("<script>    document.getElementById('postButton').addEventListener('click', function() {const url = '/x';fetch(url, {method: 'POST',body: '234'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});</script>");
+        client.println("<script>  let image = document.createElement('h1');image.id='70';document.body.appendChild(image);  setInterval(()=>{    fetch('/pp', {        method: 'GET',     })   .then(response => {  if (!response.ok) {    throw new Error('Network response was not ok');  }   return response.blob();  }).then(blob => { return blob.text(); }).then((texter)=>{     document.getElementById('70').remove();    let image = document.createElement('h1');  image.textContent = 'Temperaturere: '+texter+'\n';  image.id='70';  document.body.appendChild(image); })},500)</script>");
+        client.println("<script>  let image2 = document.createElement('h2');image2.id='69';document.body.appendChild(image);  setInterval(()=>{    fetch('/jj', {        method: 'GET',     })   .then(response => {  if (!response.ok) {    throw new Error('Network response was not ok');  }   return response.blob();  }).then(blob => { return blob.text(); }).then((texter)=>{     document.getElementById('69').remove();    let image2 = document.createElement('h1');  image2.textContent = 'Humiditytiti: '+texter;  image2.id='69';  document.body.appendChild(image2); })},500)</script>"); 
         client.println("<h2>Joystick who control the robot</h2>");
 
         client.println("<div id=\"slider\" class=\"slider\">"); 
@@ -304,13 +291,6 @@ void websiteGetter() {
         client.println("<p>");
         client.println("<span class=\"dht-labels\">There are <span class=\"quant\">61</span> ml in the container</span>");
         client.println("</p>");
-
-        client.println("<div class=\"slidecontainer\">");
-        client.println("<h3>You can regulate speed here</h3>");
-        client.println("<input type=\"range\" min=\"0\" max=\"100\" value=\"50\" class=\"slider2\" id=\"myRange\">");
-        client.println("<p>Speed: <span id=\"demo\"></span></p>");
-        client.println("<p id=\"test\"></p>");
-        client.println("</div>");
 
         client.println("<style>");
         client.println("div { position: absolute; left: 40%; }");
@@ -332,11 +312,6 @@ void websiteGetter() {
         
 //***************************************************//
         client.println("<script>");
-        client.println("var slider2 = document.getElementById(\"myRange\");");
-        client.println("var output = document.getElementById(\"demo\");");
-        client.println("output.innerHTML = slider2.value;");
-        client.println("slider2.oninput = function() { output.innerHTML = this.value; }");
-
         client.println("let center = 125;");
         client.println("let thumb = document.querySelector('.thumb');");
         client.println("let ok = 0;let jjjj = 0;");
@@ -376,10 +351,6 @@ void websiteGetter() {
         client.println("        if (newLeft >= center) { newLeft -= center; } else { newLeft -= center; }");
         client.println("        newLeft = -newLeft;");
         client.println("        if (newTop >= center) { newTop -= center; } else { newTop -= center; }");
-        client.println("        var h1 = document.getElementById('changeOnclick');");
-        client.println("        h1.innerHTML = 'Y=' + newLeft;");
-        client.println("        var h11 = document.getElementById('changeOnRight');");
-        client.println("        h11.innerHTML = 'X=' + newTop;");
          client.println("console.log(newTop); console.log(newLeft)");
          client.println("jjjj+=1;");
            client.println("   if(jjjj==30){fetch('/x', {method: 'POST',body: newLeft}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}});");
@@ -393,15 +364,6 @@ void websiteGetter() {
         client.println("        document.removeEventListener('mousemove', handleMove);"); // Remove mouse event listener
         client.println("        thumb.style.left = center + 'px';");
         client.println("        thumb.style.top = center + 'px';");
-        client.println("        var h1 = document.getElementById('changeOnclick');");
-        client.println("        h1.innerHTML = 'Y=' + 0;");
-        client.println("        var h11 = document.getElementById('changeOnRight');");
-        client.println("        h11.innerHTML = 'X=' + 0;");
-        //  client.println("function sendData(){");
-        //    client.println("  addEventListener('mousemove', function() {const url = '/x';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
-        //   client.println("   addEventListener('mousemove', function() {const url = '/y';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
-
-        //  client.println("}");
         client.println("   }");
         client.println("    function handleCancel() {");
         client.println("        document.removeEventListener('touchcancel', handleCancel);");
@@ -409,15 +371,6 @@ void websiteGetter() {
         client.println("        document.removeEventListener('mousemove', handleMove);"); // Remove mouse event listener
         client.println("        thumb.style.left = center + 'px';");
         client.println("        thumb.style.top = center + 'px';");
-        client.println("        var h1 = document.getElementById('changeOnclick');");
-        client.println("        h1.innerHTML = 0;");
-        client.println("        var h11 = document.getElementById('changeOnRight');");
-        client.println("        h11.innerHTML = 0;");
-        // client.println("function sendData(){");
-        //  client.println("  addEventListener('mousemove', function() {const url = '/x';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
-        //   client.println("   addEventListener('mousemove', function() {const url = '/y';fetch(url, {method: 'POST',body: '0'}).then(response => {if (!response.ok) {throw new Error('Network response was not ok');}})});");
-
-        // client.println("}");
         client.println("    }");
         client.println("}");
 
